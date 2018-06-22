@@ -116,7 +116,41 @@ public class TableDaoImpl implements TableDao {
 	@Override
 	public int change(int tid1, int tid2) {
 		// TODO Auto-generated method stub
-		return 0;
+		String sql = "update tabletbl set flag = 0 where id=? ";
+		Connection conn = ConnectionUtil.open();
+		
+		try {
+			conn.setAutoCommit(false);
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1,tid1);
+			pstmt.executeUpdate();
+			
+			
+			String sql2 = "update tabletbl set flag = 1 where id=? ";
+			PreparedStatement pstmt2 = conn.prepareStatement(sql2);
+			pstmt2.setInt(1, tid2);
+			pstmt2.executeUpdate();
+			
+			String sql3 = " update ordertbl set tid = ? where tid =? and isPay=0 ";
+			PreparedStatement pstmt3 = conn.prepareStatement(sql3);
+			pstmt3.setInt(1, tid2);
+			pstmt3.setInt(2, tid1);
+			pstmt3.executeUpdate();
+			
+			conn.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			return 0;
+		}finally{
+			ConnectionUtil.close(conn);
+		}
+		
+		return 1;
 	}
 		
 }
