@@ -1,6 +1,14 @@
 package com.geek99.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -90,7 +98,19 @@ public class TableDaoImpl implements TableDao {
 	@Override
 	public int union(int tid1, int tid2) {
 		// TODO Auto-generated method stub
-		return 0;
+		Connection conn = ConnectionUtil.open();
+		try {
+			CallableStatement cstmt = conn.prepareCall("{call change_table_proc(?,?)}");
+			cstmt.setInt(1, tid1);
+			cstmt.setInt(2,tid2);
+			cstmt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}finally{
+			ConnectionUtil.close(conn);
+		}
+		return 1;
 	}
 
 	@Override
