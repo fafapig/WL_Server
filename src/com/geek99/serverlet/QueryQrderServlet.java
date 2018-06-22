@@ -19,13 +19,13 @@ import com.geek99.dao.QueryOrder;
  * Servlet implementation class QueryQrderServlet
  */
 @WebServlet("/QueryQrderServlet")
-public class QueryOrderServlet extends HttpServlet {
+public class QueryQrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QueryOrderServlet() {
+    public QueryQrderServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

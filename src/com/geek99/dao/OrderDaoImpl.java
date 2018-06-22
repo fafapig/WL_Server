@@ -164,7 +164,7 @@ public class OrderDaoImpl implements OrderDao{
 
 	@Override
 	public int pay(int tid) {
-		String sql = "update Ordertbl set isPay = 1 where tid = ? ";
+		String sql = "update ordertbl set isPay = 1 where tid = ? ";
 		Connection conn = ConnectionUtil.open();
 		
 		try {
